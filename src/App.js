@@ -41,7 +41,17 @@ class App extends Component {
         <Subject
           title={this.state.subject.title}
           sub={this.state.subject.sub}
+          onChangePage={function () {
+            this.setState({ mode: "welcome" });
+          }.bind(this)}
         ></Subject>
+        {/*.state.mode = "welcome";
+           1. bind(this)
+                  => this는 function안으로 들어온 순간
+                  null이 된다. this를 바인딩 시켜줘야함
+           2. setState
+                  => setState를 해야 리액트가 mode가 바뀐것을 안다
+         */}
         <TOC data={this.state.contents}></TOC>
         <Content title={_title} desc={_desc}></Content>
       </div>
