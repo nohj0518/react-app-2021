@@ -3,24 +3,15 @@ class UpdateContent extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: this.props.data.id,
       title: this.props.data.title,
+      desc: this.props.data.desc,
     };
+    this.inputFormHandler = this.inputFormHandler.bind(this);
   }
-  shouldComponentUpdate(newProps, newState) {
-    if (this.props.data === newProps.data) {
-      return false;
-    }
-    return true;
-    /* shouldComponentUpdate가 왜 필요?
-    프로그램의 크기가 커졌을때 불필요한 render을 막기 위해서
-    return false일때는 아래 render가 실행되지 않는다. 
-    만약 push를 통해 Content를 새로 생성(Create)한다면
-    복사본을 setState해주는 것이 아닌
-    원본을 setState해주기 때문에
-    newProps와 this.props.data가 같은 값을 가져서 
-    Content의 변화가 있는지 비교할 수 없다 
-    원본을 바꾸지 않는다 === immutable'불변성' */
-  }
+  inputFormHandler = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
   render() {
     return (
       <article>
@@ -32,22 +23,30 @@ class UpdateContent extends Component {
             e.preventDefault(); /*
           preventDefault()는 submit버튼을 눌렀을때 /create_process로 
           페이지가 넘어가는 것을 막아 준다 */
-            this.props.onSubmit(e.target.title.value, e.target.desc.value);
+            this.props.onSubmit(
+              this.state.id,
+              this.state.title,
+              this.state.desc
+            );
           }.bind(this)}
         >
+          <input type="hidden" name="id" value={this.state.id}></input>
           <p>
             <input
               type="text"
               name="title"
               placeholder="title"
               value={this.state.title}
-              onChange={function (e) {
-                this.setState({ title: e.target.value });
-              }.bind(this)}
+              onChange={this.inputFormHandler}
             ></input>
           </p>
           <p>
-            <textarea name="desc" placeholder="description"></textarea>
+            <textarea
+              name="desc"
+              placeholder="description"
+              value={this.state.desc}
+              onChange={this.inputFormHandler}
+            ></textarea>
           </p>
           <p>
             <input type="submit"></input>
