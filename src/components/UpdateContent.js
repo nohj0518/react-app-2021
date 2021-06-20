@@ -30,7 +30,12 @@ class UpdateContent extends Component {
           }.bind(this)}
         >
           <p>
-            <input type="text" name="title" placeholder="title"></input>
+            <input
+              type="text"
+              name="title"
+              placeholder="title"
+              value={this.props.data.title}
+            ></input>
           </p>
           <p>
             <textarea name="desc" placeholder="description"></textarea>
