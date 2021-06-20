@@ -1,5 +1,11 @@
 import React, { Component } from "react";
 class UpdateContent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: this.props.data.title,
+    };
+  }
   shouldComponentUpdate(newProps, newState) {
     if (this.props.data === newProps.data) {
       return false;
@@ -34,7 +40,10 @@ class UpdateContent extends Component {
               type="text"
               name="title"
               placeholder="title"
-              value={this.props.data.title}
+              value={this.state.title}
+              onChange={function (e) {
+                this.setState({ title: e.target.value });
+              }.bind(this)}
             ></input>
           </p>
           <p>
